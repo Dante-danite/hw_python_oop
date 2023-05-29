@@ -126,15 +126,16 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list[int]) -> type[Training]:
     """Прочитать данные полученные от датчиков."""
-    train = {"SWM": Swimming, "RUN": Running, "WLK": SportsWalking}
-    train = {'SWM': object, 'RUN': object, 'WLK': object}
+    train: dict[str, type[Training]] = {"SWM": Swimming,
+                                        "RUN": Running,
+                                        "WLK": SportsWalking}
     if workout_type in train:
         return train[workout_type](*data)
     else:
         raise ValueError('Неизвестный тп тренировки')
 
 
-def main(training: Training) -> type[Training]:
+def main(training: type[Training]) -> None:
     """Главная функция."""
     info = training.show_training_info()
     print(info.get_message())
